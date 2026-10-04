@@ -11,7 +11,7 @@ const gal=C.gallery.length?`<section class="sec"><div class="gal">${C.gallery.ma
 const info=C.info.map(i=>`<section class="sec"><h2>${i.title}</h2><p>${i.text}</p></section>`).join('');
 const WS=C.wishes,wishes=WS&&WS.groups.length?`<section class="sec"><h2>${WS.title}</h2>${WS.groups.map(g=>`<div class="wg"><p class="wl">${g.label}</p>${g.names.map(n=>`<p class="wn">${n}</p>`).join('')}</div>`).join('')}</section>`:'';
 const K=C.credit,KN=K&&(K.whatsapp||C.rsvp.whatsapp),thanks=K?`<section class="sec"><h2>${K.title}</h2><p>${K.text}</p><p class="by">${K.name}</p><p class="tg">${K.tagline}</p>${KN?`<button class="btn fill" id="tk" type="button">${K.thanksLabel||'Say thanks'}</button>`:''}${K.link?`<a class="btn line" href="${K.link}" target="_blank" rel="noopener">${K.linkLabel}</a>`:''}</section>`:'';
-$('#app').innerHTML=`<header id="hero"><div class="petals"></div><div class="in"><p class="bis" lang="ar">${C.bismillah}</p><p class="sub">${C.intro}</p><i class="dia"></i><div class="names"><h1 class="nm">${C.groom}</h1><span class="amp">&amp;</span><h1 class="nm">${C.bride}</h1></div></div></header>
+$('#app').innerHTML=`<header id="hero"><div class="petals"></div><div class="in"><p class="bis" lang="ar">${C.bismillah}</p><p class="sub">${C.intro}</p><i class="dia"></i><div class="names"><h1 class="nm">${C.groom}</h1><span class="amp">&amp;</span><h1 class="nm">${C.bride}</h1></div></div><button class="scroll" type="button" aria-label="Scroll down"><span>Scroll<i></i></span></button></header>
 <img class="hdr" src="${A.header||'assets/header.png'}" alt="" onerror="this.remove()">
 <div class="paper">
 <section class="sec"><p class="ar" lang="ar" dir="rtl">${V.ar}</p><p class="en">${V.en}</p><p class="ref">${V.ref}</p></section>
@@ -81,7 +81,11 @@ f.onsubmit=e=>{e.preventDefault();const yes=f.att.value==='yes',d={name:f.nm.val
 
 // WhatsApp helpers (digits only, so "+92 305..." also works)
 const wa=n=>'https://wa.me/'+String(n).replace(/\D/g,'');
-const tk=$('#tk');if(tk)tk.onclick=()=>open(wa(KN)+'?text='+encodeURIComponent(K.thanksMessage||`Assalamu Alaikum ${K.name}! I saw the wedding invitation of ${C.groom} & ${C.bride}. It is beautiful, thank you for creating it!`),'_blank');
+const tk=$('#tk');if(tk)tk.onclick=()=>window.open(wa(KN)+'?text='+encodeURIComponent(K.thanksMessage||`Assalamu Alaikum ${K.name}! I saw the wedding invitation of ${C.groom} & ${C.bride}. It is beautiful, thank you for creating it!`),'_blank');
+
+// scroll-down pill: bobs after the intro, hides once the guest starts scrolling
+$('.scroll').onclick=()=>scrollTo({top:$('#hero').offsetHeight,behavior:'smooth'});
+addEventListener('scroll',()=>$('#hero').classList.toggle('moved',scrollY>40),{passive:true});
 
 // scroll reveal: each section zooms in only when scrolled to
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
