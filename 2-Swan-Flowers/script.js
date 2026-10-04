@@ -16,7 +16,7 @@ $('#app').innerHTML=`<header id="hero"><div class="petals"></div><div class="in"
 <div class="paper">
 <section class="sec"><p class="ar" lang="ar" dir="rtl">${V.ar}</p><p class="en">${V.en}</p><p class="ref">${V.ref}</p></section>
 <section class="sec"><h2>${C.welcomeTitle||'Welcome'}</h2><p class="msg">${C.message}</p></section>
-<section class="sec" id="reveal"><div class="petals"></div><h2 id="rvT">${R.title}</h2><div class="hw"><div class="heart"><div class="ans"><small>${R.label}</small><b>${dateStr(R.date)}</b><span>${timeStr(R.date)}</span></div><canvas id="sc"></canvas></div></div><button class="btn fill" id="save" hidden>Save the date</button></section>
+<section class="sec" id="reveal"><div class="petals"></div><h2 id="rvT">${R.title}</h2><div class="hw"><div class="heart"><div class="ans"><small>${R.label}</small><b>${dateStr(R.date)}</b><span>${timeStr(R.date)}</span></div><canvas id="sc"></canvas></div></div></section>
 ${gal}
 <section class="sec"><h2>${C.countdown.title}</h2><div class="cd"><div><b>00</b><small>Days</small></div><div><b>00</b><small>Hours</small></div><div><b>00</b><small>Mins</small></div><div><b>00</b><small>Secs</small></div></div></section>
 <section class="sec" id="ev"><h2>${C.eventsTitle}</h2>${ev}</section>${info}${wishes}
@@ -52,21 +52,20 @@ const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#c98a7e');g.addColorSt
 for(let i=0;i<600;i++){x.fillStyle=`rgba(255,235,220,${Math.random()*.6})`;x.fillRect(Math.random()*W,Math.random()*H,1.6,1.6)}
 x.globalCompositeOperation='destination-out';
 const check=()=>{const d=x.getImageData(0,0,W,H).data;let c=0,t=0;for(let i=3;i<d.length;i+=64){t++;if(!d[i])c++}
- if(c/t>.33){done=true;cv.classList.add('gone');$('.hw').classList.add('done');$('#rvT').textContent=R.doneTitle;$('#save').hidden=false;petals($('#reveal .petals'),36,true)}};
+ if(c/t>.4){done=true;cv.classList.add('gone');$('.hw').classList.add('done');$('#rvT').textContent=R.doneTitle;petals($('#reveal .petals'),36,true)}};
 const dot=e=>{const r=cv.getBoundingClientRect();x.beginPath();x.arc((e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height,20,0,7);x.fill();if(!done&&++n%8==0)check()};
-cv.onpointerdown=e=>{down=true;cv.setPointerCapture(e.pointerId);dot(e)};cv.onpointermove=e=>down&&dot(e);cv.onpointerup=()=>down=false;
+cv.onpointerdown=e=>{down=true;cv.setPointerCapture(e.pointerId);dot(e)};cv.onpointermove=e=>down&&dot(e);cv.onpointerup=cv.onpointercancel=()=>down=false;
 
-// calendar: Android opens Google Calendar prefilled; other devices get a chooser (Google or Apple/Outlook)
-const z=d=>new Date(d).toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
-const addCal=e=>{const end=e.end||new Date(new Date(e.start).getTime()+108e5),title=`${e.title} - ${C.groom} & ${C.bride}`,loc=`${e.venue}, ${e.address}`;
- const g='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+z(e.start)+'/'+z(end)+'&location='+encodeURIComponent(loc);
- if(/Android/.test(navigator.userAgent))return void open(g,'_blank');
- const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invite//EN','BEGIN:VEVENT','UID:'+z(e.start)+'-'+encodeURIComponent(e.title)+'@invite','DTSTAMP:'+z(Date.now()),'DTSTART:'+z(e.start),'DTEND:'+z(end),'SUMMARY:'+title,'LOCATION:'+loc,'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:Reminder','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+// calendar (events only): chooser sheet. Android also gets "Phone calendar" = opens the device calendar app prefilled
+const z=d=>new Date(d).toISOString().replace(/[-:]/g,'').split('.')[0]+'Z',ua=navigator.userAgent,droid=/Android/.test(ua),ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+const addCal=e=>{const end=e.end||new Date(new Date(e.start).getTime()+108e5),title=`${e.title} - ${C.groom} & ${C.bride}`,loc=`${e.venue}, ${e.address}`,q=encodeURIComponent;
+ const g='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+q(title)+'&dates='+z(e.start)+'/'+z(end)+'&location='+q(loc);
+ const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invite//EN','BEGIN:VEVENT','UID:'+z(e.start)+'-'+q(e.title)+'@invite','DTSTAMP:'+z(Date.now()),'DTSTART:'+z(e.start),'DTEND:'+z(end),'SUMMARY:'+title,'LOCATION:'+loc,'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:Reminder','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+ const phone=droid?`<a class="btn fill" href="intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title=${q(title)};S.eventLocation=${q(loc)};l.beginTime=${+new Date(e.start)};l.endTime=${+new Date(end)};S.browser_fallback_url=${q(g)};end">Phone calendar</a>`:'';
  const m=document.createElement('div');m.className='cal';
- m.innerHTML=`<div class="calbox"><p>Add to calendar</p><a class="btn fill" href="${g}" target="_blank" rel="noopener">Google Calendar</a><a class="btn line" href="data:text/calendar;charset=utf-8,${encodeURIComponent(t)}" download="${e.title}.ics">Apple / Outlook</a><button class="btn line" type="button">Cancel</button></div>`;
- m.onclick=ev=>{if(ev.target===m||ev.target.closest('.btn'))setTimeout(()=>m.remove(),300)};document.body.append(m)};
+ m.innerHTML=`<div class="calbox"><p>Add to calendar</p>${phone}<a class="btn ${droid?'line':'fill'}" href="${g}" target="_blank" rel="noopener">Google Calendar</a><a class="btn line" href="data:text/calendar;charset=utf-8,${q(t)}"${ios?'':` download="${e.title}.ics"`}>Apple / Outlook</a><button class="btn line" type="button">Cancel</button></div>`;
+ m.onclick=ev=>{if(ev.target===m||ev.target.closest('.btn'))setTimeout(()=>m.remove(),400)};document.body.append(m)};
 $$('[data-cal]').forEach(b=>b.onclick=()=>addCal(C.events[b.dataset.cal]));
-$('#save').onclick=()=>addCal({...C.events[0],title:'Wedding',start:R.date});
 
 // countdown + slideshow
 const T=new Date(C.countdown.to).getTime(),cb=$$('.cd b');
