@@ -18,9 +18,9 @@ window.INVITE={
   {title:"Walima",titleAlt:"ولیمہ",start:"2026-12-28T13:00:00+05:00",venue:"Shadi Hall",address:"Street, Area, City",map:"https://maps.google.com/?q=Gujranwala"}],
  gallery:[],  // e.g. ["assets/p1.jpg","assets/p2.jpg"]
  info:[{title:"Dress code",text:"Elegant formal attire in pastel or jewel tones."}], // [] to hide
- rsvp:{maxGuests:10,whatsapp:"923001234567",endpoint:"",thanks:"Thank you! Your response has been sent."},
+ rsvp:{maxGuests:10,whatsapp:"+923054376879",endpoint:"",thanks:"Thank you! Your response has been sent."},
  wishes:{title:"Best Wishes From",groups:[
-  {label:"Family",names:["The Khan Family","The Malik Family"]}]}, // groups: [] to hide
+  {label:"Family",names:["Mr. Mukhtar","Mr. Ijaz"]}]}, // groups: [] to hide
  credit:{title:"Special Thanks",text:"This invitation was designed and crafted by",name:"M. Ammar Ali",tagline:"AI Engineer",link:"",linkLabel:"Get your own invitation"}, // link e.g. "https://wa.me/92300xxxxxxx"; "" hides the button; credit:null hides section
  closing:"We can't wait to celebrate with you!"
 };
