@@ -10,7 +10,7 @@ const ev=C.events.map((e,i)=>`<article class="card"><h2>${e.title}</h2>${e.title
 const gal=C.gallery.length?`<section class="sec"><div class="gal">${C.gallery.map((s,i)=>`<img src="${s}" alt="" loading="lazy"${i?'':' class="on"'}>`).join('')}</div></section>`:'';
 const info=C.info.map(i=>`<section class="sec"><h2>${i.title}</h2><p>${i.text}</p></section>`).join('');
 const WS=C.wishes,wishes=WS&&WS.groups.length?`<section class="sec"><h2>${WS.title}</h2>${WS.groups.map(g=>`<div class="wg"><p class="wl">${g.label}</p>${g.names.map(n=>`<p class="wn">${n}</p>`).join('')}</div>`).join('')}</section>`:'';
-const K=C.credit,thanks=K?`<section class="sec"><h2>${K.title}</h2><p>${K.text}</p><p class="by">${K.name}</p><p class="tg">${K.tagline}</p>${K.link?`<a class="btn line" href="${K.link}" target="_blank" rel="noopener">${K.linkLabel}</a>`:''}</section>`:'';
+const K=C.credit,KN=K&&(K.whatsapp||C.rsvp.whatsapp),thanks=K?`<section class="sec"><h2>${K.title}</h2><p>${K.text}</p><p class="by">${K.name}</p><p class="tg">${K.tagline}</p>${KN?`<button class="btn fill" id="tk" type="button">${K.thanksLabel||'Say thanks'}</button>`:''}${K.link?`<a class="btn line" href="${K.link}" target="_blank" rel="noopener">${K.linkLabel}</a>`:''}</section>`:'';
 $('#app').innerHTML=`<header id="hero"><div class="petals"></div><div class="in"><p class="bis" lang="ar">${C.bismillah}</p><p class="sub">${C.intro}</p><i class="dia"></i><div class="names"><h1 class="nm">${C.groom}</h1><span class="amp">&amp;</span><h1 class="nm">${C.bride}</h1></div></div></header>
 <img class="hdr" src="${A.header||'assets/header.png'}" alt="" onerror="this.remove()">
 <div class="paper">
@@ -56,14 +56,13 @@ const check=()=>{const d=x.getImageData(0,0,W,H).data;let c=0,t=0;for(let i=3;i<
 const dot=e=>{const r=cv.getBoundingClientRect();x.beginPath();x.arc((e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height,20,0,7);x.fill();if(!done&&++n%8==0)check()};
 cv.onpointerdown=e=>{down=true;cv.setPointerCapture(e.pointerId);dot(e)};cv.onpointermove=e=>down&&dot(e);cv.onpointerup=cv.onpointercancel=()=>down=false;
 
-// calendar (events only): chooser sheet. Android also gets "Phone calendar" = opens the device calendar app prefilled
+// calendar (events only): chooser sheet: Google Calendar or Apple/Outlook (.ics)
 const z=d=>new Date(d).toISOString().replace(/[-:]/g,'').split('.')[0]+'Z',ua=navigator.userAgent,droid=/Android/.test(ua),ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
 const addCal=e=>{const end=e.end||new Date(new Date(e.start).getTime()+108e5),title=`${e.title} - ${C.groom} & ${C.bride}`,loc=`${e.venue}, ${e.address}`,q=encodeURIComponent;
  const g='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+q(title)+'&dates='+z(e.start)+'/'+z(end)+'&location='+q(loc);
  const t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Invite//EN','BEGIN:VEVENT','UID:'+z(e.start)+'-'+q(e.title)+'@invite','DTSTAMP:'+z(Date.now()),'DTSTART:'+z(e.start),'DTEND:'+z(end),'SUMMARY:'+title,'LOCATION:'+loc,'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:Reminder','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
- const phone=droid?`<a class="btn fill" href="intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title=${q(title)};S.eventLocation=${q(loc)};l.beginTime=${+new Date(e.start)};l.endTime=${+new Date(end)};S.browser_fallback_url=${q(g)};end">Phone calendar</a>`:'';
  const m=document.createElement('div');m.className='cal';
- m.innerHTML=`<div class="calbox"><p>Add to calendar</p>${phone}<a class="btn ${droid?'line':'fill'}" href="${g}" target="_blank" rel="noopener">Google Calendar</a><a class="btn line" href="data:text/calendar;charset=utf-8,${q(t)}"${ios?'':` download="${e.title}.ics"`}>Apple / Outlook</a><button class="btn line" type="button">Cancel</button></div>`;
+ m.innerHTML=`<div class="calbox"><p>Add to calendar</p><a class="btn fill" href="${g}" target="_blank" rel="noopener">Google Calendar</a><a class="btn line" href="data:text/calendar;charset=utf-8,${q(t)}"${ios?'':` download="${e.title}.ics"`}>Apple / Outlook</a><button class="btn line" type="button">Cancel</button></div>`;
  m.onclick=ev=>{if(ev.target===m||ev.target.closest('.btn'))setTimeout(()=>m.remove(),400)};document.body.append(m)};
 $$('[data-cal]').forEach(b=>b.onclick=()=>addCal(C.events[b.dataset.cal]));
 
@@ -77,8 +76,12 @@ const f=$('#rsvp');f.att.onchange=()=>$('#gw').hidden=f.att.value!=='yes';
 f.guests.oninput=()=>{const v=parseInt(f.guests.value);if(v>M)f.guests.value=M;else if(v<1)f.guests.value=1};
 f.onsubmit=e=>{e.preventDefault();const yes=f.att.value==='yes',d={name:f.nm.value.trim(),attending:f.att.value,guests:yes?Math.min(M,Math.max(1,parseInt(f.guests.value)||1)):0,message:f.msg.value.trim(),sent:new Date().toISOString()};
  if(C.rsvp.endpoint)fetch(C.rsvp.endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(d)}).catch(()=>{});
- if(C.rsvp.whatsapp)window.open('https://wa.me/'+C.rsvp.whatsapp+'?text='+encodeURIComponent(`RSVP: ${d.name}\n${yes?'Attending, guests: '+d.guests:'Unable to attend'}\n${d.message}`),'_blank');
+ if(C.rsvp.whatsapp)window.open(wa(C.rsvp.whatsapp)+'?text='+encodeURIComponent(`RSVP: ${d.name}\n${yes?'Attending, guests: '+d.guests:'Unable to attend'}\n${d.message}`),'_blank');
  f.hidden=true;$('#thx').hidden=false};
+
+// WhatsApp helpers (digits only, so "+92 305..." also works)
+const wa=n=>'https://wa.me/'+String(n).replace(/\D/g,'');
+const tk=$('#tk');if(tk)tk.onclick=()=>open(wa(KN)+'?text='+encodeURIComponent(K.thanksMessage||`Assalamu Alaikum ${K.name}! I saw the wedding invitation of ${C.groom} & ${C.bride}. It is beautiful, thank you for creating it!`),'_blank');
 
 // scroll reveal: each section zooms in only when scrolled to
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
