@@ -21,6 +21,6 @@ window.INVITE={
  rsvp:{maxGuests:10,whatsapp:"+923054376879",endpoint:"",thanks:"Thank you! Your response has been sent."},
  wishes:{title:"Best Wishes From",groups:[
   {label:"Family",names:["Mr. Mukhtar","Mr. Ijaz"]}]}, // groups: [] to hide
- credit:{title:"Special Thanks",text:"This invitation was designed and crafted by",name:"M. Ammar Ali",whatsapp:"+923252444213",thanksLabel:"Thank me",tagline:"AI Engineer",link:"",linkLabel:"Get your own invitation"}, // link e.g. "https://wa.me/92300xxxxxxx"; "" hides the button; credit:null hides section
+ credit:{title:"Special Thanks",text:"This invitation was designed and crafted by",name:"M. Ammar Ali",whatsapp:"+923252444213",thanksLabel:"Appreciate me",tagline:"AI Engineer",link:"",linkLabel:"Get your own invitation"}, // link e.g. "https://wa.me/92300xxxxxxx"; "" hides the button; credit:null hides section
  closing:"We can't wait to celebrate with you!"
 };
