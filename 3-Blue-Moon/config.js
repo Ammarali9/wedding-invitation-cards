@@ -23,7 +23,7 @@ window.INVITE={
   {title:"Dress Code",text:`Elegant formal attire. Soft blues, ivory and white tones are welcome.`},
   {title:"Gifts",text:`Your presence and prayers are the greatest gift. Should you wish to bless us further, any gift is received with gratitude.`}],
  wishes:{title:"Best Wishes From",groups:[]},
- rsvp:{maxGuests:10,whatsapp:"923001234567",endpoint:"",thanks:"Thank you! Your response has been sent."}, // CHANGE whatsapp: full number, digits only
+ rsvp:{maxGuests:10,whatsapp:"+923004042161",endpoint:"",thanks:"Thank you! Your response has been sent."}, // CHANGE whatsapp: full number, digits only
  credit:{title:"Special Thanks",text:"This invitation was designed and crafted by",name:"M. Ammar Ali",whatsapp:"+923252444213",thanksLabel:"Appreciate Me",tagline:"AI Engineer",link:"",linkLabel:"Get your own invitation"}, // CHANGE whatsapp
  closing:`We can't wait to celebrate with you!`
 };
