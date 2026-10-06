@@ -16,7 +16,7 @@ body.locked{overflow:hidden;height:100svh}
 .nm{font:400 clamp(3rem,15vw,4.6rem)/1.25 var(--fn);padding:.05em 0;max-width:100%;text-wrap:balance}
 .amp{font:2.2rem/1 var(--fn)}
 .petals{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.petal{position:absolute;top:-6%;width:var(--s);height:calc(var(--s)*1.4);background:radial-gradient(circle at 30% 30%,var(--petal1),var(--petal2));border-radius:100% 0 100% 0;opacity:.85;animation:fall var(--d) linear infinite}
+.petal{position:absolute;top:-6%;width:var(--s);height:calc(var(--s)*1.4);background:radial-gradient(circle at 30% 30%,#4e6581,#2f4a6b);border-radius:100% 0 100% 0;opacity:.85;animation:fall var(--d) linear infinite}
 @keyframes fall{to{transform:translate(var(--x),var(--h)) rotate(540deg)}}
 .paper{background:var(--paper) var(--img-page) repeat-y center top/100% auto;padding:2rem 15vw 3rem}
 .sec{position:relative;overflow:hidden;padding:2.4rem 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}

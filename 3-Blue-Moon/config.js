@@ -10,14 +10,14 @@ window.INVITE={
   en:"And among His signs is that He created for you mates from among yourselves, that you may find tranquility in them, and He placed between you love and mercy.",ref:"Surah Ar-Rum 30:21"}, // have Arabic/translation verified; add a verified Urdu translation if wanted
  welcomeTitle:"Welcome",
  message:`With joy and gratitude, we invite you to share in the wedding celebrations of Sikandar. Your presence and prayers mean the world to us.`,
- reveal:{title:"Scratch to reveal",doneTitle:"Our celebrations begin",label:"You're invited!",date:"2026-12-26T19:00:00+05:00"},
- countdown:{title:"Counting down to the celebrations",to:"2026-12-26T19:00:00+05:00"},
+ reveal:{title:"Scratch to reveal",doneTitle:"Our celebrations begin",label:"You're invited!",date:"2026-10-24T13:00:00+05:00"},
+ countdown:{title:"Counting down to the celebrations",to:"2026-10-24T13:00:00+05:00"},
  timezone:"Asia/Karachi",
  eventsTitle:"Events",
  events:[ // PLACEHOLDER dates/venues - replace. end:"..." optional (default 3h). map = Google Maps link
   {title:"Mehndi",start:"2026-10-23T19:00:00+05:00",venue:"At Home",address:"Near Jamia Masjid Hajrah Jaan a Fatima, Hashmi Colony, Kangniwala, Gujranwala",map:"https://maps.google.com/?q=City"},
   {title:"Barat",start:"2026-10-24T13:00:00+05:00",venue:"Eman Palace",address:"Makki Road, Gujranwala",map:"https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjgp9m4haWXAxUAAAAAHQAAAAAQDw..i&mstk=AUtExfB-IcE4R9ACbOlHCtThJMijvEfQG4J338pD6-tDG_jzmqx9Vgp5y_f3a0dKPG_7rg58HYKTQkjM9cozX2C3UNfKs9rGRZX5sCgAkzxdDxYhL_UMwoHOmkrUPNU0i9sqsHaMxBCtVh6wWp5VZXv6pmBJI7xmEvDUDvhmq5848M5e-VQ&hl=en&pvq=Cg0vZy8xMWo1N2w2OXNjgAEBkAEB&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=pk&sa=X&ftid=0x391f2b82f035771f:0x709ba6026bf8f19a"},
-  {title:"Walima",start:"2026-10-25T12:00:00+05:00",venue:"Eman Palace",address:"Makki Road, Gujranwala",map:"https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjgp9m4haWXAxUAAAAAHQAAAAAQDw..i&mstk=AUtExfB-IcE4R9ACbOlHCtThJMijvEfQG4J338pD6-tDG_jzmqx9Vgp5y_f3a0dKPG_7rg58HYKTQkjM9cozX2C3UNfKs9rGRZX5sCgAkzxdDxYhL_UMwoHOmkrUPNU0i9sqsHaMxBCtVh6wWp5VZXv6pmBJI7xmEvDUDvhmq5848M5e-VQ&hl=en&pvq=Cg0vZy8xMWo1N2w2OXNjgAEBkAEB&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=pk&sa=X&ftid=0x391f2b82f035771f:0x709ba6026bf8f19a"}],
+  {title:"Walima",start:"2026-10-25T12:00:00+05:00",end:"2026-10-25T16:00:00+05:00",venue:"Eman Palace",address:"Makki Road, Gujranwala",map:"https://maps.google.com/maps?vet=10CAAQoqAOahcKEwjgp9m4haWXAxUAAAAAHQAAAAAQDw..i&mstk=AUtExfB-IcE4R9ACbOlHCtThJMijvEfQG4J338pD6-tDG_jzmqx9Vgp5y_f3a0dKPG_7rg58HYKTQkjM9cozX2C3UNfKs9rGRZX5sCgAkzxdDxYhL_UMwoHOmkrUPNU0i9sqsHaMxBCtVh6wWp5VZXv6pmBJI7xmEvDUDvhmq5848M5e-VQ&hl=en&pvq=Cg0vZy8xMWo1N2w2OXNjgAEBkAEB&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=pk&sa=X&ftid=0x391f2b82f035771f:0x709ba6026bf8f19a"}],
  gallery:[],
  info:[
   {title:"Dress Code",text:`Elegant formal attire. Soft blues, ivory and white tones are welcome.`},
